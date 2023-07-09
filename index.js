@@ -2,7 +2,6 @@ import { Configuration, OpenAIApi } from "openai";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,8 +11,8 @@ const port = 8000;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/",(req,res) => {
-  res.setHeader("Access-Control-Allow-Credentials","true");
+app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.send("API is running...");
 })
 
@@ -23,14 +22,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 
-
-
-
-  const runConversation = async (request, response) => {
-
-
-  console.log(request.body);
-
+const runConversation = async (request, response) => {
   let question = request.body.inputData.question;
   let answer = request.body.inputData.answer;
 
@@ -42,7 +34,8 @@ const openai = new OpenAIApi(configuration);
       How to determine the score:
       - Better responds fully to the asked question, with sufficient level of detail
       - If you do not know the answer based on the context, that should be a score of 0` },
-    { role: "user", content: `context : India is a great country, it has a variety of cultures, 
+    {
+      role: "user", content: `context : India is a great country, it has a variety of cultures, 
       new delhi is the capital of india, India has a total of 28 states and 8 union territories
       , India lies in south Asia, rupee is the indian currency, and national bird of India is Peacock.
       ` },
@@ -88,28 +81,17 @@ const generateResult = async (messages) => {
       functions: functions,
       function_call: 'auto',
     });
-  
+
     console.log("generated result:", secondResponse.data.choices[0]);
     return secondResponse.data.choices[0];
   } catch (error) {
     console.log(error);
     return error;
-    // Handle the error gracefully
   }
 }
 
 
-
-
-
-
-
-
-
 app.post("/", async (request, response) => {
-
-
-
   let result = await runConversation(request, response);
   response.json({
     output: result,
