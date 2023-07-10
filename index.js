@@ -7,7 +7,7 @@ dotenv.config();
 
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -31,9 +31,7 @@ const runConversation = async (request, response) => {
       role: "system", content: `strictly follow the provided context to check answer of the question at the end.
       In addition to giving an answer, also return a score of how fully it answered the user's question.
       This should be in the following format:
-      How to determine the score:
-      - Better responds fully to the asked question, with sufficient level of detail
-      - If you do not know the answer based on the context, that should be a score of 0` },
+     ` },
     {
       role: "user", content: `context : India is a great country, it has a variety of cultures, 
       new delhi is the capital of india, India has a total of 28 states and 8 union territories
@@ -75,17 +73,15 @@ const generateResult = async (messages) => {
     },
   }]
   try {
+
     let secondResponse = await openai.createChatCompletion({
       model: "gpt-3.5-turbo-0613",
       messages: messages,
       functions: functions,
       function_call: 'auto',
     });
-
-    console.log("generated result:", secondResponse.data.choices[0]);
     return secondResponse.data.choices[0];
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
