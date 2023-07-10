@@ -51,7 +51,7 @@ const generateResult = async (messages) => {
 
   let functions = [{
     "name": "checkAnswers",
-    "description": "checks if answer is corrent or not, based on the context. provides correct answer and a scrote that determine if answer is correct ",
+    "description": "checks if answer is corrent or not, based on the context. provides correct answer and a score that determines how close is the provided answer to real answer ",
     "parameters": {
       "type": "object",
       "properties": {
@@ -61,7 +61,7 @@ const generateResult = async (messages) => {
         },
         "score": {
           "type": "string",
-          "description": "its value lie between 0-100 on basis of answer's correctness, give partial score if answer is not fully correct",
+          "description": "its value lie between 0-100 on basis of answer's correctness, give partial score if answer is not fully correct.",
         },
         "correctAnswer": {
           "type": "string",
