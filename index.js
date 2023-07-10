@@ -27,10 +27,9 @@ const runConversation = async (request, response) => {
   let answer = request.body.inputData.answer;
 
   let messages = [
-    {
-      role: "system", content: `strictly follow the provided context to check answer of the question at the end.
-      In addition to giving an answer, also return a score of how fully it answered the user's question.
-      This should be in the following format:
+    {role:"system", content: `act as a exam grader`},
+    {role: "system", content: `strictly follow the provided context to check answer of the question provided by user.
+      In addition to giving an answer, also return a score of how fully it answered the user's question on basis of context.
      ` },
     {
       role: "user", content: `context : India is a great country, it has a variety of cultures, 
